@@ -9,9 +9,13 @@
 <x-dc>
 <helmet>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300;1,6..72,400&family=Hanken+Grotesk:wght@400;500;600&display=swap">
-<script src="./image-slot.js"></script>
+<title>Casa Baños de la Villa · Alojamiento y baños árabes en Priego de Córdoba</title>
+<meta name="description" content="Alojamiento boutique y baños árabes en el Barrio de la Villa, Priego de Córdoba (Andalucía). Nueve habitaciones, nueve historias.">
+<link rel="icon" type="image/png" href="./assets/favicon.png">
+<link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Mulish:wght@400;500;600&display=swap">
 <style>
+html{--serif:'Cormorant Garamond',Georgia,serif;--sans:'Mulish',system-ui,sans-serif;--sw:400;--track:-.005em}
 html,body{margin:0;background:#FAF9F7;color:#1D2329;-webkit-font-smoothing:antialiased}
 *{box-sizing:border-box}
 a{color:#1D2329;text-decoration:none}
@@ -29,7 +33,7 @@ a:hover{color:#0A78A8}
     </sc-if>
   </a>
   <sc-if value="{{ desktop }}" hint-placeholder-val="{{ true }}">
-    <nav style="display:flex;align-items:center;gap:clamp(18px,2.4vw,36px);font:500 13px/1 'Hanken Grotesk',sans-serif;letter-spacing:.04em">
+    <nav style="display:flex;align-items:center;gap:clamp(18px,2.4vw,36px);font:500 13px/1 var(--sans);letter-spacing:.04em">
       <a href="/la-casa" style="color:inherit" style-hover="opacity:.6">La casa</a>
       <a href="/habitaciones" style="color:inherit" style-hover="opacity:.6">Habitaciones</a>
       <a href="/banos-arabes" style="color:inherit" style-hover="opacity:.6">Baños &amp; bienestar</a>
@@ -38,27 +42,41 @@ a:hover{color:#0A78A8}
   </sc-if>
   <div style="display:flex;align-items:center;gap:20px">
     <sc-if value="{{ desktop }}" hint-placeholder-val="{{ true }}">
-      <span style="font:500 12px/1 'Hanken Grotesk',sans-serif;letter-spacing:.12em;opacity:.8">ES · <span style="opacity:.55">EN</span></span>
+      <div style="display:flex;align-items:center;gap:8px;font:500 12px/1 var(--sans);letter-spacing:.12em">
+        <button onClick="{{ setEs }}" style="appearance:none;background:none;border:0;padding:12px 2px;color:inherit;font:inherit;letter-spacing:inherit;cursor:pointer;opacity:{{ esOp }}">ES</button>
+        <span style="opacity:.5">·</span>
+        <button onClick="{{ setEn }}" style="appearance:none;background:none;border:0;padding:12px 2px;color:inherit;font:inherit;letter-spacing:inherit;cursor:pointer;opacity:{{ enOp }}">EN</button>
+      </div>
     </sc-if>
-    <a href="https://www.booking.com/hotel/es/casa-banos-de-la-villa.es.html" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;padding:13px 22px;background:#0A78A8;color:#FAF9F7;font:600 11px/1 'Hanken Grotesk',sans-serif;letter-spacing:.18em;text-transform:uppercase" style-hover="background:#075E86;color:#FAF9F7">Reservar</a>
+    <sc-if value="{{ desktop }}" hint-placeholder-val="{{ true }}">
+      <a href="https://www.booking.com/hotel/es/casa-banos-de-la-villa.es.html" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;padding:13px 22px;background:#0A78A8;color:#FAF9F7;font:600 11px/1 var(--sans);letter-spacing:.18em;text-transform:uppercase" style-hover="background:#075E86;color:#FAF9F7">Reservar</a>
+    </sc-if>
     <sc-if value="{{ mobile }}" hint-placeholder-val="{{ false }}">
-      <button onClick="{{ toggleMenu }}" style="appearance:none;background:none;border:0;color:inherit;padding:10px 0 10px 6px;min-height:44px;font:600 11px/1 'Hanken Grotesk',sans-serif;letter-spacing:.18em;text-transform:uppercase;cursor:pointer">{{ menuLabel }}</button>
+      <button onClick="{{ toggleMenu }}" aria-label="{{ menuLabel }}" style="appearance:none;background:none;border:0;color:inherit;width:44px;height:44px;padding:0;margin-right:-10px;position:relative;cursor:pointer">
+        <span style="position:absolute;left:10px;width:24px;height:1.5px;background:currentColor;border-radius:1px;transition:transform .3s,top .3s;top:{{ bar1Top }};transform:{{ bar1Rot }}"></span>
+        <span style="position:absolute;left:10px;top:21px;width:24px;height:1.5px;background:currentColor;border-radius:1px;transition:opacity .2s;opacity:{{ bar2Op }}"></span>
+        <span style="position:absolute;left:10px;width:24px;height:1.5px;background:currentColor;border-radius:1px;transition:transform .3s,top .3s;top:{{ bar3Top }};transform:{{ bar3Rot }}"></span>
+      </button>
     </sc-if>
   </div>
 </header>
 
 <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
   <div style="position:fixed;inset:0;z-index:45;background:#0A5A80;color:#FAF9F7;padding:120px 24px 40px;display:flex;flex-direction:column;justify-content:space-between">
-    <nav style="display:flex;flex-direction:column;gap:6px;font:300 44px/1.15 'Newsreader',serif">
+    <nav style="display:flex;flex-direction:column;gap:6px;font:var(--sw) 44px/1.15 var(--serif)">
       <a href="/la-casa" onClick="{{ closeMenu }}" style="color:#FAF9F7">La casa</a>
       <a href="/habitaciones" onClick="{{ closeMenu }}" style="color:#FAF9F7">Habitaciones</a>
-      <a href="/banos-arabes" onClick="{{ closeMenu }}" style="color:#FAF9F7;font-style:italic">Baños &amp; bienestar</a>
+      <a href="/banos-arabes" onClick="{{ closeMenu }}" style="color:#FAF9F7">Baños &amp; bienestar</a>
       <a href="/experiencias" onClick="{{ closeMenu }}" style="color:#FAF9F7">Experiencias</a>
     </nav>
-    <div style="display:flex;flex-direction:column;gap:8px;font:400 14px/1.5 'Hanken Grotesk',sans-serif;color:#DDD7E5">
+    <div style="display:flex;flex-direction:column;gap:8px;font:400 14px/1.5 var(--sans);color:#DDD7E5">
       <span>C/ Real, 63 · Priego de Córdoba</span>
       <span>(+34) 957 54 72 74</span>
-      <span style="letter-spacing:.12em;font-size:12px;margin-top:12px">ES · EN</span>
+      <div style="margin-top:12px"><div style="display:flex;align-items:center;gap:8px;font:500 14px/1 var(--sans);letter-spacing:.12em">
+        <button onClick="{{ setEs }}" style="appearance:none;background:none;border:0;padding:12px 2px;color:inherit;font:inherit;letter-spacing:inherit;cursor:pointer;opacity:{{ esOp }}">ES</button>
+        <span style="opacity:.5">·</span>
+        <button onClick="{{ setEn }}" style="appearance:none;background:none;border:0;padding:12px 2px;color:inherit;font:inherit;letter-spacing:inherit;cursor:pointer;opacity:{{ enOp }}">EN</button>
+      </div></div>
     </div>
   </div>
 </sc-if>
@@ -66,19 +84,19 @@ a:hover{color:#0A78A8}
 <sc-if value="{{ heroFull }}" hint-placeholder-val="{{ true }}">
   <section id="inicio" data-screen-label="01 Hero" style="position:relative;height:100svh;min-height:640px;background:#1D2329;color:#FAF9F7;overflow:hidden">
     <div style="position:absolute;inset:0">
-      <image-slot id="hero" shape="rect" placeholder="Foto existente · cabecera2.jpg o Patio-04.jpg — patio, cal y luz"></image-slot>
+      <img src="./assets/photos/hero.jpg" alt="" fetchpriority="high" style="display:block;width:100%;height:100%;object-fit:cover"></img>
     </div>
-    <div style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(to top,rgba(16,24,34,.72) 0%,rgba(16,24,34,.15) 48%,rgba(16,24,34,0) 70%)"></div>
+    <div style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(to top,rgba(16,24,34,.78) 0%,rgba(16,24,34,.5) 45%,rgba(16,24,34,.15) 75%,rgba(16,24,34,0) 100%),linear-gradient(to right,rgba(16,24,34,.45) 0%,rgba(16,24,34,0) 60%)"></div>
     <div style="position:absolute;left:0;right:0;bottom:0;padding:0 clamp(20px,5vw,72px) clamp(32px,6vw,72px);display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:32px;pointer-events:none">
       <div style="display:flex;flex-direction:column;gap:28px;max-width:900px;pointer-events:auto">
-        <span style="font:500 11px/1.2 'Hanken Grotesk',sans-serif;letter-spacing:.24em;text-transform:uppercase">Priego de Córdoba · Andalucía</span>
-        <h1 style="margin:0;font:300 clamp(58px,10vw,164px)/.9 'Newsreader',serif;letter-spacing:-.025em;text-wrap:balance">Vive tu <span style="font-style:italic">propia</span><br>historia.</h1>
+        <span style="font:500 11px/1.2 var(--sans);letter-spacing:.24em;text-transform:uppercase">Priego de Córdoba · Andalucía</span>
+        <h1 style="margin:0;font:var(--sw) clamp(58px,10vw,164px)/.9 var(--serif);letter-spacing:var(--track);text-wrap:balance">Vive tu <span style="font-style:italic">propia</span><br>historia.</h1>
         <div style="display:flex;flex-wrap:wrap;align-items:center;gap:28px;margin-top:8px">
-          <a href="https://www.booking.com/hotel/es/casa-banos-de-la-villa.es.html" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:14px;padding:18px 32px;background:#0A78A8;color:#FAF9F7;font:600 12px/1 'Hanken Grotesk',sans-serif;letter-spacing:.18em;text-transform:uppercase" style-hover="background:#075E86;color:#FAF9F7">Reservar</a>
-          <a href="#la-casa" style="display:inline-flex;align-items:center;gap:14px;white-space:nowrap;padding-bottom:8px;border-bottom:1px solid #FAF9F7;color:#FAF9F7;font:600 12px/1 'Hanken Grotesk',sans-serif;letter-spacing:.18em;text-transform:uppercase" style-hover="color:#DDD7E5">Descubrir la casa <span>→</span></a>
+          <a href="https://www.booking.com/hotel/es/casa-banos-de-la-villa.es.html" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:14px;padding:18px 32px;background:#0A78A8;color:#FAF9F7;font:600 12px/1 var(--sans);letter-spacing:.18em;text-transform:uppercase" style-hover="background:#075E86;color:#FAF9F7">Reservar</a>
+          <a href="#la-casa" style="display:inline-flex;align-items:center;gap:14px;white-space:nowrap;padding-bottom:8px;border-bottom:1px solid #FAF9F7;color:#FAF9F7;font:600 12px/1 var(--sans);letter-spacing:.18em;text-transform:uppercase" style-hover="color:#DDD7E5">Descubrir la casa <span>→</span></a>
         </div>
       </div>
-      <sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}"><p style="margin:0;max-width:240px;font:400 13px/1.6 'Hanken Grotesk',sans-serif;color:#F4F2F7">Alojamiento y baños árabes en el Barrio de la Villa, casco histórico de Priego.</p></sc-if>
+      <sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}"><p style="margin:0;max-width:240px;font:400 13px/1.6 var(--sans);color:#F4F2F7">Alojamiento y baños árabes en el Barrio de la Villa, casco histórico de Priego.</p></sc-if>
     </div>
   </section>
 </sc-if>
@@ -86,15 +104,15 @@ a:hover{color:#0A78A8}
 <sc-if value="{{ heroSplit }}" hint-placeholder-val="{{ false }}">
   <section id="inicio" data-screen-label="01 Hero" style="display:flex;flex-wrap:wrap;min-height:100svh;background:#FAF9F7">
     <div style="flex:1 1 420px;display:flex;flex-direction:column;justify-content:flex-end;gap:28px;padding:140px clamp(20px,5vw,72px) clamp(40px,6vw,80px)">
-      <span style="font:500 11px/1.2 'Hanken Grotesk',sans-serif;letter-spacing:.24em;text-transform:uppercase;color:#B0388F">Priego de Córdoba · Andalucía</span>
-      <h1 style="margin:0;font:300 clamp(56px,8vw,128px)/.92 'Newsreader',serif;letter-spacing:-.025em">Vive tu <span style="font-style:italic">propia</span><br>historia.</h1>
+      <span style="font:500 11px/1.2 var(--sans);letter-spacing:.24em;text-transform:uppercase;color:#B0388F">Priego de Córdoba · Andalucía</span>
+      <h1 style="margin:0;font:var(--sw) clamp(56px,8vw,128px)/.92 var(--serif);letter-spacing:var(--track)">Vive tu <span style="font-style:italic">propia</span><br>historia.</h1>
       <div style="display:flex;flex-wrap:wrap;align-items:center;gap:28px">
-        <a href="https://www.booking.com/hotel/es/casa-banos-de-la-villa.es.html" target="_blank" rel="noopener" style="display:inline-flex;padding:18px 32px;background:#0A78A8;color:#FAF9F7;font:600 12px/1 'Hanken Grotesk',sans-serif;letter-spacing:.18em;text-transform:uppercase" style-hover="background:#075E86;color:#FAF9F7">Reservar</a>
-        <a href="#la-casa" style="display:inline-flex;gap:14px;white-space:nowrap;padding-bottom:8px;border-bottom:1px solid #1D2329;font:600 12px/1 'Hanken Grotesk',sans-serif;letter-spacing:.18em;text-transform:uppercase">Descubrir la casa <span>→</span></a>
+        <a href="https://www.booking.com/hotel/es/casa-banos-de-la-villa.es.html" target="_blank" rel="noopener" style="display:inline-flex;padding:18px 32px;background:#0A78A8;color:#FAF9F7;font:600 12px/1 var(--sans);letter-spacing:.18em;text-transform:uppercase" style-hover="background:#075E86;color:#FAF9F7">Reservar</a>
+        <a href="#la-casa" style="display:inline-flex;gap:14px;white-space:nowrap;padding-bottom:8px;border-bottom:1px solid #1D2329;font:600 12px/1 var(--sans);letter-spacing:.18em;text-transform:uppercase">Descubrir la casa <span>→</span></a>
       </div>
     </div>
     <div style="flex:1.3 1 480px;position:relative;min-height:70svh;background:#DDD7E5">
-      <image-slot id="hero-split" shape="rect" placeholder="Foto existente · Fachada-02.jpg — fachada y calle encalada"></image-slot>
+      <img src="./assets/photos/hero.jpg" alt="" fetchpriority="high" style="display:block;width:100%;height:100%;object-fit:cover"></img>
     </div>
   </section>
 </sc-if>
@@ -102,38 +120,33 @@ a:hover{color:#0A78A8}
 <section data-screen-label="02 La experiencia" style="padding:clamp(96px,13vw,200px) clamp(20px,5vw,72px);background:#FAF9F7">
   <div style="max-width:1320px;margin:0 auto;display:flex;flex-direction:column;gap:clamp(72px,10vw,150px)">
     <div style="display:flex;flex-wrap:wrap;gap:32px 64px;align-items:baseline">
-      <span style="flex:0 0 200px;font:500 11px/1.2 'Hanken Grotesk',sans-serif;letter-spacing:.24em;text-transform:uppercase;color:#B0388F">01 — La experiencia</span>
-      <p style="flex:1 1 420px;margin:0;max-width:24ch;font:300 clamp(28px,3.4vw,50px)/1.18 'Newsreader',serif;letter-spacing:-.01em;text-wrap:pretty">Buscamos ese instante que permanece imborrable en la memoria. Por eso unimos <span style="font-style:italic">la luz, el agua, los colores, los aromas y los sonidos</span> para crear un lugar con alma.</p>
+      <span style="flex:0 0 200px;font:500 11px/1.2 var(--sans);letter-spacing:.24em;text-transform:uppercase;color:#B0388F">01 — La experiencia</span>
+      <p style="flex:1 1 420px;margin:0;max-width:40ch;font:var(--sw) clamp(28px,3.4vw,50px)/1.18 var(--serif);letter-spacing:var(--track);text-wrap:pretty">Buscamos ese instante que permanece imborrable en la memoria. Por eso unimos <span style="font-style:italic">la luz, el agua, los colores, los aromas y los sonidos</span> para crear un lugar con alma.</p>
     </div>
-    <div style="display:flex;flex-wrap:wrap;gap:56px clamp(40px,6vw,96px);align-items:flex-start">
-      <div style="flex:1 1 480px;display:flex;flex-direction:column;gap:clamp(36px,5vw,64px)">
-        <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 32px">
-          <span style="font:300 clamp(56px,8.5vw,136px)/.9 'Newsreader',serif;letter-spacing:-.03em">El color.</span>
-          <span style="max-width:30ch;font:400 15px/1.6 'Hanken Grotesk',sans-serif;color:#525A64">Cada habitación es única en decoración, en color e, incluso, en aroma.</span>
+    <div style="display:grid;grid-template-columns:minmax(0,1fr) clamp(110px,30vw,420px);gap:clamp(20px,6vw,96px);align-items:start">
+      <div style="min-width:0;display:flex;flex-direction:column;gap:clamp(28px,5vw,64px)">
+        <div style="display:flex;flex-wrap:{{ expRowWrap }};align-items:baseline;gap:8px clamp(14px,2.4vw,32px)">
+          <span style="font:var(--sw) clamp(26px,6.4vw,112px)/.95 var(--serif);white-space:nowrap;letter-spacing:var(--track)">El color.</span>
+          <span style="min-width:0;max-width:30ch;font:400 clamp(13px,1.1vw,15px)/1.55 var(--sans);color:#525A64">Cada habitación es única en decoración, en color e, incluso, en aroma.</span>
         </div>
-        <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 32px;padding-left:clamp(0px,calc(14vw - 70px),180px)">
-          <span style="font:300 clamp(56px,8.5vw,136px)/.9 'Newsreader',serif;font-style:italic;letter-spacing:-.03em;color:#B0388F">El aroma.</span>
-          <span style="max-width:30ch;font:400 15px/1.6 'Hanken Grotesk',sans-serif;color:#525A64">La llave invisible que devuelve un momento vivido a la memoria.</span>
+        <div style="display:flex;flex-wrap:{{ expRowWrap }};align-items:baseline;gap:8px clamp(14px,2.4vw,32px);padding-left:clamp(0px,calc(8vw - 40px),100px)">
+          <span style="font:var(--sw) clamp(26px,6.4vw,112px)/.95 var(--serif);white-space:nowrap;font-style:italic;letter-spacing:var(--track);color:#B0388F">El aroma.</span>
+          <span style="min-width:0;max-width:30ch;font:400 clamp(13px,1.1vw,15px)/1.55 var(--sans);color:#525A64">La llave invisible que devuelve un momento vivido a la memoria.</span>
         </div>
-        <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 32px;padding-left:clamp(0px,calc(6vw - 30px),80px)">
-          <span style="font:300 clamp(56px,8.5vw,136px)/.9 'Newsreader',serif;letter-spacing:-.03em;color:#0A78A8">El agua.</span>
-          <span style="max-width:30ch;font:400 15px/1.6 'Hanken Grotesk',sans-serif;color:#525A64">Fría, templada y caliente. Cuidado para el cuerpo y para el alma.</span>
+        <div style="display:flex;flex-wrap:{{ expRowWrap }};align-items:baseline;gap:8px clamp(14px,2.4vw,32px);padding-left:clamp(0px,calc(6vw - 30px),80px)">
+          <span style="font:var(--sw) clamp(26px,6.4vw,112px)/.95 var(--serif);white-space:nowrap;letter-spacing:var(--track);color:#0A78A8">El agua.</span>
+          <span style="min-width:0;max-width:30ch;font:400 clamp(13px,1.1vw,15px)/1.55 var(--sans);color:#525A64">Fría, templada y caliente. Cuidado para el cuerpo y para el alma.</span>
         </div>
-        <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 32px;padding-left:clamp(0px,calc(20vw - 100px),260px)">
-          <span style="font:300 clamp(56px,8.5vw,136px)/.9 'Newsreader',serif;font-style:italic;letter-spacing:-.03em">Las sensaciones.</span>
+        <div style="display:flex;flex-wrap:{{ expRowWrap }};align-items:baseline;gap:8px clamp(14px,2.4vw,32px);padding-left:clamp(0px,calc(10vw - 60px),140px)">
+          <span style="font:var(--sw) clamp(26px,6.4vw,112px)/.95 var(--serif);white-space:nowrap;font-style:italic;letter-spacing:var(--track)">Las sensaciones.</span>
         </div>
       </div>
-      <div style="flex:0 1 420px;min-width:260px;display:flex;flex-direction:column;gap:20px">
+      <div style="min-width:0;display:flex;flex-direction:column;gap:clamp(10px,1.6vw,20px)">
         <div style="aspect-ratio:4/5;width:100%">
-          <image-slot id="exp-color" shape="rect" placeholder="fotoColor.jpg — el color"></image-slot>
+          <img src="./assets/photos/exp-color.jpg" alt="" loading="lazy" style="display:block;width:100%;height:100%;object-fit:cover"></img>
         </div>
-        <div style="display:flex;gap:20px;align-items:flex-start">
-          <div style="flex:1;aspect-ratio:1/1">
-            <image-slot id="exp-aroma" shape="rect" placeholder="rosa.jpg — el aroma"></image-slot>
-          </div>
-          <div style="flex:1.2;aspect-ratio:3/4;margin-top:clamp(20px,5vw,72px)">
-            <image-slot id="exp-agua" shape="rect" placeholder="agua.jpg — el agua"></image-slot>
-          </div>
+        <div style="width:72%;aspect-ratio:1/1;align-self:flex-end;margin-top:clamp(0px,4vw,56px)">
+          <img src="./assets/photos/exp-aroma.jpg" alt="" loading="lazy" style="display:block;width:100%;height:100%;object-fit:cover"></img>
         </div>
       </div>
     </div>
@@ -142,41 +155,41 @@ a:hover{color:#0A78A8}
 
 <section id="la-casa" data-screen-label="03 La casa" style="padding:clamp(96px,12vw,180px) clamp(20px,5vw,72px);background:#F2EDF7">
   <div style="max-width:1320px;margin:0 auto;display:flex;flex-direction:column;gap:clamp(48px,6vw,88px)">
-    <div style="display:flex;flex-wrap:wrap;gap:24px 64px;align-items:flex-end;justify-content:space-between">
-      <div style="display:flex;flex-direction:column;gap:28px;flex:1 1 520px">
-        <span style="font:500 11px/1.2 'Hanken Grotesk',sans-serif;letter-spacing:.24em;text-transform:uppercase;color:#B0388F">02 — La casa</span>
-        <h2 style="margin:0;max-width:14ch;font:300 clamp(44px,6vw,96px)/.98 'Newsreader',serif;letter-spacing:-.025em;text-wrap:balance">Una casa con alma en el <span style="font-style:italic">Barrio de la Villa.</span></h2>
+    <div style="display:flex;flex-direction:column;gap:20px">
+      <div style="display:flex;flex-direction:column;gap:28px">
+        <span style="font:500 11px/1.2 var(--sans);letter-spacing:.24em;text-transform:uppercase;color:#B0388F">02 — La casa</span>
+        <h2 style="margin:0;font:var(--sw) clamp(40px,5vw,80px)/1 var(--serif);letter-spacing:var(--track);text-wrap:balance;white-space:{{ casaWrap }}">Una casa con alma en el <span style="font-style:italic">Barrio de la Villa.</span></h2>
       </div>
-      <span style="font:400 13px/1.6 'Hanken Grotesk',sans-serif;color:#525A64">C/ Real, 63 — Priego de Córdoba</span>
+      <span style="font:400 13px/1.6 var(--sans);color:#525A64">C/ Real, 63 — Priego de Córdoba</span>
     </div>
     <div style="display:flex;flex-wrap:wrap;gap:20px">
       <div style="flex:2 1 520px;position:relative;height:clamp(360px,52vw,760px)">
-        <image-slot id="casa-patio" shape="rect" placeholder="Patio-04.jpg — patio interior"></image-slot>
+        <img src="./assets/photos/casa-patio.jpg" alt="" loading="lazy" style="display:block;width:100%;height:100%;object-fit:cover"></img>
       </div>
       <div style="flex:1 1 300px;display:flex;flex-direction:column;justify-content:space-between;gap:40px;padding:clamp(0px,2vw,24px) 0 0 clamp(0px,2vw,24px)">
         <div style="display:flex;flex-direction:column;gap:20px;max-width:38ch">
-          <p style="margin:0;font:400 17px/1.65 'Hanken Grotesk',sans-serif;text-wrap:pretty">Entre muros llenos de historia y tradición, un lugar donde el pasado y el futuro se unen. Un alma que se manifiesta en las personas, en el trato, en el uso de energías renovables y en la responsabilidad social.</p>
+          <p style="margin:0;font:400 17px/1.65 var(--sans);text-wrap:pretty">Entre muros llenos de historia y tradición, un lugar donde el pasado y el futuro se unen. Un alma que se manifiesta en las personas, en el trato, en el uso de energías renovables y en la responsabilidad social.</p>
           <div style="display:flex;flex-direction:column;gap:8px;padding-top:20px;border-top:1px solid #D8CEE4">
-            <span style="font:500 11px/1.2 'Hanken Grotesk',sans-serif;letter-spacing:.24em;text-transform:uppercase;color:#B0388F">Atención sensacional</span>
-            <p style="margin:0;font:300 italic 21px/1.4 'Newsreader',serif">Una experiencia única y personal para cada viajero, según sus gustos y aficiones.</p>
+            <span style="font:500 11px/1.2 var(--sans);letter-spacing:.24em;text-transform:uppercase;color:#B0388F">Atención sensacional</span>
+            <p style="margin:0;font:var(--sw) italic 21px/1.4 var(--serif)">Una experiencia única y personal para cada viajero, según sus gustos y aficiones.</p>
           </div>
         </div>
         <div style="aspect-ratio:3/4;width:min(100%,300px);align-self:flex-end">
-          <image-slot id="casa-recibidor" shape="rect" placeholder="Recibidor-01.jpg — detalle interior"></image-slot>
+          <img src="./assets/photos/casa-recibidor.webp" alt="" loading="lazy" style="display:block;width:100%;height:100%;object-fit:cover"></img>
         </div>
       </div>
     </div>
     <div style="display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start">
       <div style="flex:1 1 260px;aspect-ratio:1/1;margin-top:clamp(0px,calc(10vw - 40px),120px)">
-        <image-slot id="casa-comedor" shape="rect" placeholder="Comedor-01.jpg — desayuno"></image-slot>
+        <img src="./assets/photos/casa-comedor.webp" alt="" loading="lazy" style="display:block;width:100%;height:100%;object-fit:cover"></img>
       </div>
       <div style="flex:2.2 1 480px;display:flex;flex-direction:column;gap:20px">
         <div style="aspect-ratio:16/9;width:100%">
-          <image-slot id="casa-terraza" shape="rect" placeholder="Terraza-24.jpg — azotea, piscina y vistas"></image-slot>
+          <img src="./assets/photos/casa-terraza.jpg" alt="" loading="lazy" style="display:block;width:100%;height:100%;object-fit:cover"></img>
         </div>
         <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:20px;align-items:center">
-          <span style="font:500 11px/1.2 'Hanken Grotesk',sans-serif;letter-spacing:.24em;text-transform:uppercase;color:#B0388F">Patios · Terraza · Piscina en la azotea</span>
-          <a href="/la-casa" style="display:inline-flex;gap:14px;white-space:nowrap;padding-bottom:8px;border-bottom:1px solid #1D2329;font:600 12px/1 'Hanken Grotesk',sans-serif;letter-spacing:.18em;text-transform:uppercase" style-hover="color:#0A78A8;border-color:#0A78A8">Descubrir la casa <span>→</span></a>
+          <span style="font:500 11px/1.2 var(--sans);letter-spacing:.24em;text-transform:uppercase;color:#B0388F">Patios · Terraza · Piscina en la azotea</span>
+          <a href="/la-casa" style="display:inline-flex;gap:14px;white-space:nowrap;padding-bottom:8px;border-bottom:1px solid #1D2329;font:600 12px/1 var(--sans);letter-spacing:.18em;text-transform:uppercase" style-hover="color:#0A78A8;border-color:#0A78A8">Descubrir la casa <span>→</span></a>
         </div>
       </div>
     </div>
@@ -187,30 +200,30 @@ a:hover{color:#0A78A8}
   <div style="max-width:1320px;margin:0 auto;display:flex;flex-direction:column;gap:clamp(64px,8vw,120px)">
     <div style="display:flex;flex-wrap:wrap;gap:32px 64px;align-items:flex-end;justify-content:space-between">
       <div style="display:flex;flex-direction:column;gap:28px;flex:1 1 560px">
-        <span style="font:500 11px/1.2 'Hanken Grotesk',sans-serif;letter-spacing:.24em;text-transform:uppercase;color:#B0388F">03 — Habitaciones</span>
-        <h2 style="margin:0;font:300 clamp(48px,7vw,116px)/.94 'Newsreader',serif;letter-spacing:-.03em">Nueve habitaciones.<br><span style="font-style:italic;color:#B0388F">Nueve historias.</span></h2>
+        <span style="font:500 11px/1.2 var(--sans);letter-spacing:.24em;text-transform:uppercase;color:#B0388F">03 — Habitaciones</span>
+        <h2 style="margin:0;font:var(--sw) clamp(40px,5vw,80px)/1 var(--serif);letter-spacing:var(--track)">Nueve habitaciones.<br><span style="font-style:italic;color:#B0388F">Nueve historias.</span></h2>
       </div>
-      <p style="flex:0 1 360px;margin:0;font:400 16px/1.65 'Hanken Grotesk',sans-serif;color:#525A64;text-wrap:pretty">Cada habitación es única y diferente en decoración, color e, incluso, en aroma. Todas con baño completo, climatización, internet e hilo musical.</p>
+      <p style="flex:0 1 360px;margin:0;font:400 16px/1.65 var(--sans);color:#525A64;text-wrap:pretty">Cada habitación es única y diferente en decoración, color e, incluso, en aroma. Todas con baño completo, climatización, internet e hilo musical.</p>
     </div>
 
     <div style="display:flex;flex-wrap:wrap;gap:56px clamp(24px,4vw,64px);align-items:flex-start">
       <a href="/habitaciones/solidaridad" style="flex:1.35 1 440px;display:flex;flex-direction:column;gap:22px;color:#1D2329" style-hover="color:#1D2329">
-        <div style="aspect-ratio:5/4;width:100%"><image-slot id="hab-solidaridad" shape="rect" placeholder="Solidaridad-06.jpg"></image-slot></div>
+        <div style="aspect-ratio:5/4;width:100%;overflow:hidden"><img src="./assets/photos/hab-solidaridad.jpg" alt="" loading="lazy" style="display:block;width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.7,.2,1),filter .8s" style-hover="transform:scale(1.04);filter:brightness(1.06)"></img></div>
         <div style="display:flex;gap:20px;align-items:baseline">
-          <span style="font:500 12px/1 'Hanken Grotesk',sans-serif;letter-spacing:.14em;color:#B0388F">01</span>
+          <span style="font:500 12px/1 var(--sans);letter-spacing:.14em;color:#B0388F">01</span>
           <div style="display:flex;flex-direction:column;gap:10px">
-            <span style="font:300 clamp(32px,3.2vw,48px)/1 'Newsreader',serif">Historias de <span style="font-style:italic">Solidaridad</span></span>
-            <span style="max-width:40ch;font:400 15px/1.6 'Hanken Grotesk',sans-serif;color:#525A64">“La gota abre la piedra, no por su fuerza, sino por su constancia.”</span>
+            <span style="font:var(--sw) clamp(32px,3.2vw,48px)/1 var(--serif)">Historias de <span style="font-style:italic">Solidaridad</span></span>
+            <span style="max-width:40ch;font:400 15px/1.6 var(--sans);color:#525A64">“La gota abre la piedra, no por su fuerza, sino por su constancia.”</span>
           </div>
         </div>
       </a>
       <a href="/habitaciones/vitalidad" style="flex:1 1 320px;display:flex;flex-direction:column;gap:22px;color:#1D2329;margin-top:clamp(0px,calc(16vw - 80px),220px)" style-hover="color:#1D2329">
-        <div style="aspect-ratio:3/4;width:100%"><image-slot id="hab-vitalidad" shape="rect" placeholder="Vitalidad-04.jpg"></image-slot></div>
+        <div style="aspect-ratio:3/4;width:100%;overflow:hidden"><img src="./assets/photos/hab-vitalidad.jpg" alt="" loading="lazy" style="display:block;width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.7,.2,1),filter .8s" style-hover="transform:scale(1.04);filter:brightness(1.06)"></img></div>
         <div style="display:flex;gap:20px;align-items:baseline">
-          <span style="font:500 12px/1 'Hanken Grotesk',sans-serif;letter-spacing:.14em;color:#B0388F">02</span>
+          <span style="font:500 12px/1 var(--sans);letter-spacing:.14em;color:#B0388F">02</span>
           <div style="display:flex;flex-direction:column;gap:10px">
-            <span style="font:300 clamp(32px,3.2vw,48px)/1 'Newsreader',serif">Historias de <span style="font-style:italic">Vitalidad</span></span>
-            <span style="max-width:36ch;font:400 15px/1.6 'Hanken Grotesk',sans-serif;color:#525A64">“Porque, a veces, también hay que vivir la vida despacio.”</span>
+            <span style="font:var(--sw) clamp(32px,3.2vw,48px)/1 var(--serif)">Historias de <span style="font-style:italic">Vitalidad</span></span>
+            <span style="max-width:36ch;font:400 15px/1.6 var(--sans);color:#525A64">“Porque, a veces, también hay que vivir la vida despacio.”</span>
           </div>
         </div>
       </a>
@@ -218,42 +231,42 @@ a:hover{color:#0A78A8}
 
     <div style="display:flex;justify-content:flex-end;padding-left:clamp(0px,calc(20vw - 100px),280px)">
       <a href="/habitaciones/aroma" style="flex:0 1 760px;display:flex;flex-direction:column;gap:22px;color:#1D2329" style-hover="color:#1D2329">
-        <div style="aspect-ratio:4/3;width:100%"><image-slot id="hab-aroma" shape="rect" placeholder="Aromatizador-06.jpg o aroma1g.jpg"></image-slot></div>
+        <div style="aspect-ratio:4/3;width:100%;overflow:hidden"><img src="./assets/photos/hab-aroma.jpg" alt="" loading="lazy" style="display:block;width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.7,.2,1),filter .8s" style-hover="transform:scale(1.04);filter:brightness(1.06)"></img></div>
         <div style="display:flex;gap:20px;align-items:baseline">
-          <span style="font:500 12px/1 'Hanken Grotesk',sans-serif;letter-spacing:.14em;color:#B0388F">03</span>
+          <span style="font:500 12px/1 var(--sans);letter-spacing:.14em;color:#B0388F">03</span>
           <div style="display:flex;flex-direction:column;gap:10px">
-            <span style="font:300 clamp(32px,3.2vw,48px)/1 'Newsreader',serif">Historias de <span style="font-style:italic">Aroma</span></span>
-            <span style="max-width:42ch;font:400 15px/1.6 'Hanken Grotesk',sans-serif;color:#525A64">“¿Cuál quieres que sea la llave que guarde tu felicidad?”</span>
+            <span style="font:var(--sw) clamp(32px,3.2vw,48px)/1 var(--serif)">Historias de <span style="font-style:italic">Aroma</span></span>
+            <span style="max-width:42ch;font:400 15px/1.6 var(--sans);color:#525A64">“¿Cuál quieres que sea la llave que guarde tu felicidad?”</span>
           </div>
         </div>
       </a>
     </div>
 
     <div style="display:flex;flex-direction:column;gap:32px;padding-top:40px;border-top:1px solid #DDD7E5">
-      <div style="display:flex;flex-wrap:wrap;gap:14px clamp(20px,3vw,44px);font:300 clamp(24px,2.6vw,38px)/1.1 'Newsreader',serif">
-        <span><sup style="font:500 10px 'Hanken Grotesk',sans-serif;letter-spacing:.1em;color:#B0388F;margin-right:6px">01</sup>Solidaridad</span>
-        <span><sup style="font:500 10px 'Hanken Grotesk',sans-serif;letter-spacing:.1em;color:#B0388F;margin-right:6px">02</sup>Vitalidad</span>
-        <span><sup style="font:500 10px 'Hanken Grotesk',sans-serif;letter-spacing:.1em;color:#B0388F;margin-right:6px">03</sup>Aroma</span>
-        <span><sup style="font:500 10px 'Hanken Grotesk',sans-serif;letter-spacing:.1em;color:#B0388F;margin-right:6px">04</sup>Pasión</span>
-        <span><sup style="font:500 10px 'Hanken Grotesk',sans-serif;letter-spacing:.1em;color:#B0388F;margin-right:6px">05</sup>Sueños</span>
-        <span><sup style="font:500 10px 'Hanken Grotesk',sans-serif;letter-spacing:.1em;color:#B0388F;margin-right:6px">06</sup>Legado</span>
-        <span><sup style="font:500 10px 'Hanken Grotesk',sans-serif;letter-spacing:.1em;color:#B0388F;margin-right:6px">07</sup>Imaginación</span>
-        <span><sup style="font:500 10px 'Hanken Grotesk',sans-serif;letter-spacing:.1em;color:#B0388F;margin-right:6px">08</sup>Sostenibilidad</span>
-        <span><sup style="font:500 10px 'Hanken Grotesk',sans-serif;letter-spacing:.1em;color:#B0388F;margin-right:6px">09</sup>Armonía</span>
+      <div style="display:flex;flex-wrap:wrap;gap:14px clamp(20px,3vw,44px);font:var(--sw) clamp(24px,2.6vw,38px)/1.1 var(--serif)">
+        <span style="cursor:pointer;transition:color .25s" style-hover="color:#0A78A8"><sup style="font:500 10px var(--sans);letter-spacing:.1em;color:#B0388F;margin-right:6px">01</sup>Solidaridad</span>
+        <span style="cursor:pointer;transition:color .25s" style-hover="color:#0A78A8"><sup style="font:500 10px var(--sans);letter-spacing:.1em;color:#B0388F;margin-right:6px">02</sup>Vitalidad</span>
+        <span style="cursor:pointer;transition:color .25s" style-hover="color:#0A78A8"><sup style="font:500 10px var(--sans);letter-spacing:.1em;color:#B0388F;margin-right:6px">03</sup>Aroma</span>
+        <span style="cursor:pointer;transition:color .25s" style-hover="color:#0A78A8"><sup style="font:500 10px var(--sans);letter-spacing:.1em;color:#B0388F;margin-right:6px">04</sup>Pasión</span>
+        <span style="cursor:pointer;transition:color .25s" style-hover="color:#0A78A8"><sup style="font:500 10px var(--sans);letter-spacing:.1em;color:#B0388F;margin-right:6px">05</sup>Sueños</span>
+        <span style="cursor:pointer;transition:color .25s" style-hover="color:#0A78A8"><sup style="font:500 10px var(--sans);letter-spacing:.1em;color:#B0388F;margin-right:6px">06</sup>Legado</span>
+        <span style="cursor:pointer;transition:color .25s" style-hover="color:#0A78A8"><sup style="font:500 10px var(--sans);letter-spacing:.1em;color:#B0388F;margin-right:6px">07</sup>Imaginación</span>
+        <span style="cursor:pointer;transition:color .25s" style-hover="color:#0A78A8"><sup style="font:500 10px var(--sans);letter-spacing:.1em;color:#B0388F;margin-right:6px">08</sup>Sostenibilidad</span>
+        <span style="cursor:pointer;transition:color .25s" style-hover="color:#0A78A8"><sup style="font:500 10px var(--sans);letter-spacing:.1em;color:#B0388F;margin-right:6px">09</sup>Armonía</span>
       </div>
-      <a href="/habitaciones" style="align-self:flex-start;display:inline-flex;gap:14px;white-space:nowrap;padding-bottom:8px;border-bottom:1px solid #1D2329;font:600 12px/1 'Hanken Grotesk',sans-serif;letter-spacing:.18em;text-transform:uppercase" style-hover="color:#0A78A8;border-color:#0A78A8">Descubrir las habitaciones <span>→</span></a>
+      <a href="/habitaciones" style="align-self:flex-start;display:inline-flex;gap:14px;white-space:nowrap;padding-bottom:8px;border-bottom:1px solid #1D2329;font:600 12px/1 var(--sans);letter-spacing:.18em;text-transform:uppercase" style-hover="color:#0A78A8;border-color:#0A78A8">Descubrir las habitaciones <span>→</span></a>
     </div>
   </div>
 </section>
 
 <section data-screen-label="05 Baños árabes" style="background:#0A5A80;color:#F4F2F7">
   <div style="position:relative;height:100svh;min-height:620px;overflow:hidden">
-    <div style="position:absolute;inset:0"><image-slot id="banos-hero" shape="rect" placeholder="sensaciones2.jpg o piscina-templada.jpg — agua, penumbra, vapor"></image-slot></div>
+    <div style="position:absolute;inset:0"><img src="./assets/photos/banos-hero.jpg" alt="" loading="lazy" style="display:block;width:100%;height:100%;object-fit:cover"></img></div>
     <div style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(to bottom,rgba(10,90,128,.2) 0%,rgba(10,90,128,.35) 50%,#0A5A80 100%)"></div>
     <div style="position:absolute;left:0;right:0;bottom:0;padding:0 clamp(20px,5vw,72px) clamp(48px,7vw,96px);pointer-events:none">
       <div style="max-width:1320px;margin:0 auto;display:flex;flex-direction:column;gap:32px">
-        <span style="font:500 11px/1.2 'Hanken Grotesk',sans-serif;letter-spacing:.24em;text-transform:uppercase;color:#BFE6F5">04 — Baños árabes</span>
-        <p style="margin:0;max-width:20ch;font:300 clamp(40px,5.8vw,92px)/1.02 'Newsreader',serif;letter-spacing:-.02em;color:#FAF9F7;text-wrap:balance">Si el cuerpo tiene sed, quiere agua. <span style="font-style:italic">Si el alma tiene sed, quiere Casa Baños de la Villa.</span></p>
+        <span style="font:500 11px/1.2 var(--sans);letter-spacing:.24em;text-transform:uppercase;color:#BFE6F5">04 — Baños árabes</span>
+        <p style="margin:0;font:var(--sw) clamp(40px,5vw,80px)/1.04 var(--serif);letter-spacing:var(--track);color:#FAF9F7;text-wrap:balance">Si el cuerpo tiene sed, quiere agua. <span style="font-style:italic">Si el alma tiene sed, quiere Casa Baños de la Villa.</span></p>
       </div>
     </div>
   </div>
@@ -261,71 +274,68 @@ a:hover{color:#0A78A8}
   <div style="padding:clamp(72px,9vw,140px) clamp(20px,5vw,72px) clamp(96px,12vw,180px)">
     <div style="max-width:1320px;margin:0 auto;display:flex;flex-direction:column;gap:clamp(64px,8vw,120px)">
       <div style="display:flex;flex-wrap:wrap;gap:32px 64px;justify-content:space-between;align-items:flex-start">
-        <p style="flex:1 1 480px;margin:0;max-width:30ch;font:300 clamp(24px,2.4vw,34px)/1.35 'Newsreader',serif;text-wrap:pretty">Un viaje del cuerpo y del alma que sigue la antigua filosofía de los hammam: aguas de distintas temperaturas, aromas y masajes, en una atmósfera creada para ti.</p>
-        <span style="font:500 11px/1.8 'Hanken Grotesk',sans-serif;letter-spacing:.24em;text-transform:uppercase;color:#BFE6F5">El recorrido</span>
+        <p style="flex:1 1 480px;margin:0;max-width:48ch;font:var(--sw) clamp(24px,2.4vw,34px)/1.35 var(--serif);text-wrap:pretty">Un viaje del cuerpo y del alma que sigue la antigua filosofía de los hammam: aguas de distintas temperaturas, aromas y masajes, en una atmósfera creada para ti.</p>
+        <span style="font:500 11px/1.8 var(--sans);letter-spacing:.24em;text-transform:uppercase;color:#BFE6F5">El recorrido</span>
       </div>
 
       <div style="display:flex;flex-wrap:wrap;gap:4px">
         <div style="flex:1 1 260px;display:flex;flex-direction:column;gap:18px">
-          <div style="aspect-ratio:3/4;width:100%"><image-slot id="banos-fria" shape="rect" placeholder="piscina-fria.jpg"></image-slot></div>
+          <div style="aspect-ratio:3/4;width:100%"><img src="./assets/photos/banos-fria.jpg" alt="" loading="lazy" style="display:block;width:100%;height:100%;object-fit:cover"></img></div>
           <div style="display:flex;justify-content:space-between;align-items:baseline;padding:0 4px">
-            <span style="font:300 italic 30px/1 'Newsreader',serif">Agua fría</span>
-            <span style="width:28px;height:2px;background:#8FD6F2"></span>
+            <span style="font:var(--sw) italic 30px/1 var(--serif)">Agua fría</span>
           </div>
         </div>
         <div style="flex:1 1 260px;display:flex;flex-direction:column;gap:18px;margin-top:clamp(0px,calc(8vw - 40px),96px)">
-          <div style="aspect-ratio:3/4;width:100%"><image-slot id="banos-templada" shape="rect" placeholder="piscina-templada.jpg"></image-slot></div>
+          <div style="aspect-ratio:3/4;width:100%"><img src="./assets/photos/banos-templada.jpg" alt="" loading="lazy" style="display:block;width:100%;height:100%;object-fit:cover"></img></div>
           <div style="display:flex;justify-content:space-between;align-items:baseline;padding:0 4px">
-            <span style="font:300 italic 30px/1 'Newsreader',serif">Agua templada</span>
-            <span style="width:28px;height:2px;background:#D9C8EC"></span>
+            <span style="font:var(--sw) italic 30px/1 var(--serif)">Agua templada</span>
           </div>
         </div>
         <div style="flex:1 1 260px;display:flex;flex-direction:column;gap:18px;margin-top:clamp(0px,calc(16vw - 80px),192px)">
-          <div style="aspect-ratio:3/4;width:100%"><image-slot id="banos-caliente" shape="rect" placeholder="piscina-caliente.jpg"></image-slot></div>
+          <div style="aspect-ratio:3/4;width:100%"><img src="./assets/photos/banos-caliente.jpg" alt="" loading="lazy" style="display:block;width:100%;height:100%;object-fit:cover"></img></div>
           <div style="display:flex;justify-content:space-between;align-items:baseline;padding:0 4px">
-            <span style="font:300 italic 30px/1 'Newsreader',serif">Agua caliente</span>
-            <span style="width:28px;height:2px;background:#F07CC8"></span>
+            <span style="font:var(--sw) italic 30px/1 var(--serif)">Agua caliente</span>
           </div>
         </div>
       </div>
 
       <div style="display:flex;flex-wrap:wrap;gap:20px;align-items:stretch">
         <div style="flex:1.4 1 420px;position:relative;min-height:clamp(320px,36vw,520px)">
-          <image-slot id="banos-masaje" shape="rect" placeholder="zona-de-masajes.jpg — masaje y aromaterapia"></image-slot>
+          <img src="./assets/photos/banos-masaje.jpg" alt="" loading="lazy" style="display:block;width:100%;height:100%;object-fit:cover"></img>
         </div>
         <div style="flex:1 1 320px;display:flex;flex-direction:column;justify-content:space-between;gap:48px;padding:clamp(8px,2vw,32px)">
           <div style="display:flex;flex-direction:column;gap:28px">
             <div style="display:flex;flex-direction:column;gap:8px;padding-bottom:24px;border-bottom:1px solid rgba(244,242,247,.2)">
-              <span style="font:300 clamp(30px,2.8vw,40px)/1.05 'Newsreader',serif">Baño turco</span>
-              <span style="font:400 15px/1.6 'Hanken Grotesk',sans-serif;color:#D6EDF7">El vapor que prepara el cuerpo para el descanso.</span>
+              <span style="font:var(--sw) clamp(30px,2.8vw,40px)/1.05 var(--serif)">Baño turco</span>
+              <span style="font:400 15px/1.6 var(--sans);color:#D6EDF7">El vapor que prepara el cuerpo para el descanso.</span>
             </div>
             <div style="display:flex;flex-direction:column;gap:8px;padding-bottom:24px;border-bottom:1px solid rgba(244,242,247,.2)">
-              <span style="font:300 clamp(30px,2.8vw,40px)/1.05 'Newsreader',serif">Masajes &amp; <span style="font-style:italic">aromaterapia</span></span>
-              <span style="font:400 15px/1.6 'Hanken Grotesk',sans-serif;color:#D6EDF7">De 15 o 30 minutos, dentro del propio circuito.</span>
+              <span style="font:var(--sw) clamp(30px,2.8vw,40px)/1.05 var(--serif)">Masajes &amp; <span style="font-style:italic">aromaterapia</span></span>
+              <span style="font:400 15px/1.6 var(--sans);color:#D6EDF7">De 15 o 30 minutos, dentro del propio circuito.</span>
             </div>
             <div style="display:flex;flex-direction:column;gap:8px">
-              <span style="font:300 clamp(30px,2.8vw,40px)/1.05 'Newsreader',serif">Tetería</span>
-              <span style="font:400 15px/1.6 'Hanken Grotesk',sans-serif;color:#D6EDF7">El aroma y el sabor del té, para terminar despacio.</span>
+              <span style="font:var(--sw) clamp(30px,2.8vw,40px)/1.05 var(--serif)">Tetería</span>
+              <span style="font:400 15px/1.6 var(--sans);color:#D6EDF7">El aroma y el sabor del té, para terminar despacio.</span>
             </div>
           </div>
           <div style="width:min(100%,220px);aspect-ratio:1/1;align-self:flex-end">
-            <image-slot id="banos-teteria" shape="rect" placeholder="teteria.jpg"></image-slot>
+            <img src="./assets/photos/banos-teteria.webp" alt="" loading="lazy" style="display:block;width:100%;height:100%;object-fit:cover"></img>
           </div>
         </div>
       </div>
 
       <div style="display:flex;flex-wrap:wrap;gap:40px 64px;align-items:flex-end;justify-content:space-between;padding-top:48px;border-top:1px solid rgba(244,242,247,.2)">
         <div style="display:flex;flex-direction:column;gap:14px">
-          <span style="font:500 11px/1.2 'Hanken Grotesk',sans-serif;letter-spacing:.24em;text-transform:uppercase;color:#BFE6F5">Sesiones de felicidad</span>
-          <span style="font:300 clamp(32px,3.6vw,52px)/1 'Newsreader',serif">1 h 30 min <span style="font-style:italic;color:#BFE6F5">de circuito</span></span>
+          <span style="font:500 11px/1.2 var(--sans);letter-spacing:.24em;text-transform:uppercase;color:#BFE6F5">Sesiones de felicidad</span>
+          <span style="font:var(--sw) clamp(32px,3.6vw,52px)/1 var(--serif)">1 h 30 min <span style="font-style:italic;color:#BFE6F5">de circuito</span></span>
         </div>
-        <div style="display:flex;flex-wrap:wrap;gap:24px 48px;font:400 14px/1.6 'Hanken Grotesk',sans-serif;color:#D6EDF7">
+        <div style="display:flex;flex-wrap:wrap;gap:24px 48px;font:400 14px/1.6 var(--sans);color:#D6EDF7">
           <div style="display:flex;flex-direction:column;gap:4px"><span style="font-weight:600;color:#F4F2F7">Mañanas</span><span>10:00 — 12:00</span></div>
           <div style="display:flex;flex-direction:column;gap:4px"><span style="font-weight:600;color:#F4F2F7">Tardes</span><span>18:00 — 20:00</span></div>
           <div style="display:flex;flex-direction:column;gap:4px"><span style="font-weight:600;color:#F4F2F7">Todo el año</span><span>Reserva previa · desde 14 años</span></div>
         </div>
         <div style="display:flex;flex-wrap:wrap;align-items:center;gap:28px">
-          <a href="/banos-arabes" style="display:inline-flex;gap:14px;white-space:nowrap;padding-bottom:8px;border-bottom:1px solid #F4F2F7;color:#F4F2F7;font:600 12px/1 'Hanken Grotesk',sans-serif;letter-spacing:.18em;text-transform:uppercase" style-hover="color:#BFE6F5">Descubrir los baños <span>→</span></a>
+          <a href="/banos-arabes" style="display:inline-flex;gap:14px;white-space:nowrap;padding-bottom:8px;border-bottom:1px solid #F4F2F7;color:#F4F2F7;font:600 12px/1 var(--sans);letter-spacing:.18em;text-transform:uppercase" style-hover="color:#BFE6F5">Descubrir los baños <span>→</span></a>
         </div>
       </div>
     </div>
@@ -335,22 +345,22 @@ a:hover{color:#0A78A8}
 <section data-screen-label="06 Priego" style="background:#FAF9F7;padding:clamp(96px,13vw,200px) 0 clamp(96px,13vw,200px) clamp(20px,5vw,72px)">
   <div style="display:flex;flex-wrap:wrap;gap:56px clamp(40px,6vw,96px);align-items:center">
     <div style="flex:1 1 380px;max-width:560px;display:flex;flex-direction:column;gap:32px;padding-right:clamp(20px,5vw,0px)">
-      <span style="font:500 11px/1.2 'Hanken Grotesk',sans-serif;letter-spacing:.24em;text-transform:uppercase;color:#B0388F">05 — Priego de Córdoba</span>
-      <h2 style="margin:0;font:300 clamp(48px,6.4vw,104px)/.95 'Newsreader',serif;letter-spacing:-.03em">El corazón <span style="font-style:italic;color:#0A78A8">de Andalucía.</span></h2>
-      <p style="margin:0;max-width:44ch;font:400 17px/1.65 'Hanken Grotesk',sans-serif;text-wrap:pretty">En pleno Parque Natural de las Sierras Subbéticas. En el Barrio de la Villa te adentrarás en un laberinto de calles estrechas, acompañado por el aroma de las flores y el sonido del agua, que te guiará hasta la casa.</p>
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:20px 16px;padding:24px 0;border-top:1px solid #DDD7E5;border-bottom:1px solid #DDD7E5">
-        <div style="display:flex;flex-direction:column;gap:4px"><span style="font:300 30px/1 'Newsreader',serif">75<span style="font-size:15px"> km</span></span><span style="font:500 11px/1.2 'Hanken Grotesk',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#B0388F">Jaén</span></div>
-        <div style="display:flex;flex-direction:column;gap:4px"><span style="font:300 30px/1 'Newsreader',serif">79<span style="font-size:15px"> km</span></span><span style="font:500 11px/1.2 'Hanken Grotesk',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#B0388F">Granada</span></div>
-        <div style="display:flex;flex-direction:column;gap:4px"><span style="font:300 30px/1 'Newsreader',serif">100<span style="font-size:15px"> km</span></span><span style="font:500 11px/1.2 'Hanken Grotesk',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#B0388F">Córdoba</span></div>
-        <div style="display:flex;flex-direction:column;gap:4px"><span style="font:300 30px/1 'Newsreader',serif">139<span style="font-size:15px"> km</span></span><span style="font:500 11px/1.2 'Hanken Grotesk',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#B0388F">Málaga</span></div>
-        <div style="display:flex;flex-direction:column;gap:4px"><span style="font:300 30px/1 'Newsreader',serif">189<span style="font-size:15px"> km</span></span><span style="font:500 11px/1.2 'Hanken Grotesk',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#B0388F">Sevilla</span></div>
+      <span style="font:500 11px/1.2 var(--sans);letter-spacing:.24em;text-transform:uppercase;color:#B0388F">05 — Priego de Córdoba</span>
+      <h2 style="margin:0;font:var(--sw) clamp(40px,5vw,80px)/1 var(--serif);letter-spacing:var(--track)">El corazón <span style="font-style:italic;color:#0A78A8">de Andalucía.</span></h2>
+      <p style="margin:0;max-width:44ch;font:400 17px/1.65 var(--sans);text-wrap:pretty">En pleno Parque Natural de las Sierras Subbéticas. En el Barrio de la Villa te adentrarás en un laberinto de calles estrechas, acompañado por el aroma de las flores y el sonido del agua, que te guiará hasta la casa.</p>
+      <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px 16px;padding:24px 0;border-top:1px solid #DDD7E5;border-bottom:1px solid #DDD7E5">
+        <div style="display:flex;flex-direction:column;gap:4px"><span style="font:var(--sw) 30px/1 var(--serif)">75<span style="font-size:15px"> km</span></span><span style="font:500 11px/1.2 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:#B0388F">Jaén</span></div>
+        <div style="display:flex;flex-direction:column;gap:4px"><span style="font:var(--sw) 30px/1 var(--serif)">79<span style="font-size:15px"> km</span></span><span style="font:500 11px/1.2 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:#B0388F">Granada</span></div>
+        <div style="display:flex;flex-direction:column;gap:4px"><span style="font:var(--sw) 30px/1 var(--serif)">100<span style="font-size:15px"> km</span></span><span style="font:500 11px/1.2 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:#B0388F">Córdoba</span></div>
+        <div style="display:flex;flex-direction:column;gap:4px"><span style="font:var(--sw) 30px/1 var(--serif)">139<span style="font-size:15px"> km</span></span><span style="font:500 11px/1.2 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:#B0388F">Málaga</span></div>
+        <div style="display:flex;flex-direction:column;gap:4px"><span style="font:var(--sw) 30px/1 var(--serif)">189<span style="font-size:15px"> km</span></span><span style="font:500 11px/1.2 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:#B0388F">Sevilla</span></div>
       </div>
-      <a href="/priego" style="align-self:flex-start;display:inline-flex;gap:14px;white-space:nowrap;padding-bottom:8px;border-bottom:1px solid #1D2329;font:600 12px/1 'Hanken Grotesk',sans-serif;letter-spacing:.18em;text-transform:uppercase" style-hover="color:#0A78A8;border-color:#0A78A8">Descubrir Priego <span>→</span></a>
+      <a href="/priego" style="align-self:flex-start;display:inline-flex;gap:14px;white-space:nowrap;padding-bottom:8px;border-bottom:1px solid #1D2329;font:600 12px/1 var(--sans);letter-spacing:.18em;text-transform:uppercase" style-hover="color:#0A78A8;border-color:#0A78A8">Descubrir Priego <span>→</span></a>
     </div>
     <div style="flex:1.5 1 480px;position:relative;min-height:clamp(440px,60vw,880px)">
-      <image-slot id="priego-main" shape="rect" placeholder="Fachada-03.jpg — calle del Barrio de la Villa"></image-slot>
-      <div style="position:absolute;left:clamp(-120px,-6vw,-24px);bottom:clamp(-64px,-4vw,-24px);width:clamp(160px,22vw,320px);aspect-ratio:4/5;outline:clamp(8px,1vw,14px) solid #FAF9F7">
-        <image-slot id="priego-vistas" shape="rect" placeholder="Terraza-45.jpg — vistas"></image-slot>
+      <img src="./assets/photos/priego-main.jpg" alt="" loading="lazy" style="display:block;width:100%;height:100%;object-fit:cover"></img>
+      <div style="position:absolute;left:max(clamp(-120px,-6vw,-24px),calc(14px - clamp(20px,5vw,72px)));bottom:clamp(-64px,-4vw,-24px);width:clamp(170px,24vw,340px);aspect-ratio:1/1;outline:clamp(8px,1vw,14px) solid #FAF9F7">
+        <img src="./assets/photos/priego-vistas.webp" alt="" loading="lazy" style="display:block;width:100%;height:100%;object-fit:cover;object-position:0% 50%"></img>
       </div>
     </div>
   </div>
@@ -359,15 +369,15 @@ a:hover{color:#0A78A8}
 <section data-screen-label="07 Regalo" style="background:#B0388F;color:#FFFFFF;padding:clamp(64px,8vw,120px) clamp(20px,5vw,72px)">
   <div style="max-width:1320px;margin:0 auto;display:flex;flex-wrap:wrap;gap:40px clamp(40px,6vw,96px);align-items:center">
     <div style="flex:0 1 260px;min-width:180px;aspect-ratio:4/5">
-      <image-slot id="regalo" shape="rect" placeholder="toalla-vela-02.jpg — detalle"></image-slot>
+      <img src="./assets/photos/regalo.webp" alt="" loading="lazy" style="display:block;width:100%;height:100%;object-fit:cover"></img>
     </div>
     <div style="flex:1 1 420px;display:flex;flex-direction:column;gap:24px">
-      <span style="font:500 11px/1.2 'Hanken Grotesk',sans-serif;letter-spacing:.24em;text-transform:uppercase;color:#FAD9EF">06 — Experiencias regalo</span>
-      <h2 style="margin:0;font:300 clamp(40px,5vw,80px)/1 'Newsreader',serif;letter-spacing:-.02em">Regala un momento <span style="font-style:italic">para recordar.</span></h2>
+      <span style="font:500 11px/1.2 var(--sans);letter-spacing:.24em;text-transform:uppercase;color:#FAD9EF">06 — Experiencias regalo</span>
+      <h2 style="margin:0;font:var(--sw) clamp(40px,5vw,80px)/1 var(--serif);letter-spacing:var(--track)">Regala un momento <span style="font-style:italic">para recordar.</span></h2>
     </div>
     <div style="flex:0 1 320px;display:flex;flex-direction:column;gap:28px">
-      <p style="margin:0;font:400 16px/1.6 'Hanken Grotesk',sans-serif;color:#FDEEF8">Una estancia en la casa o una sesión de felicidad en los baños, para alguien especial.</p>
-      <a href="/experiencias" style="align-self:flex-start;display:inline-flex;padding:18px 32px;background:#FAF9F7;color:#8A2A70;font:600 12px/1 'Hanken Grotesk',sans-serif;letter-spacing:.18em;text-transform:uppercase" style-hover="background:#1D2329;color:#FAF9F7">Regalar una experiencia</a>
+      <p style="margin:0;font:400 16px/1.6 var(--sans);color:#FDEEF8">Una estancia en la casa o una sesión de felicidad en los baños, para alguien especial.</p>
+      <a href="/experiencias" style="align-self:flex-start;display:inline-flex;padding:18px 32px;background:#FAF9F7;color:#8A2A70;font:600 12px/1 var(--sans);letter-spacing:.18em;text-transform:uppercase" style-hover="background:#1D2329;color:#FAF9F7">Regalar una experiencia</a>
     </div>
   </div>
 </section>
@@ -375,33 +385,33 @@ a:hover{color:#0A78A8}
 <section data-screen-label="08 Libro de visitas" style="background:#FAF9F7;padding:clamp(96px,13vw,200px) clamp(20px,5vw,72px)">
   <div style="max-width:1320px;margin:0 auto;display:flex;flex-direction:column;gap:clamp(64px,8vw,112px)">
     <div style="display:flex;flex-wrap:wrap;gap:32px 64px">
-      <span style="flex:0 0 200px;font:500 11px/1.2 'Hanken Grotesk',sans-serif;letter-spacing:.24em;text-transform:uppercase;color:#B0388F">07 — Libro de visitas</span>
+      <span style="flex:0 0 200px;font:500 11px/1.2 var(--sans);letter-spacing:.24em;text-transform:uppercase;color:#B0388F">07 — Libro de visitas</span>
       <figure style="flex:1 1 560px;margin:0;display:flex;flex-direction:column;gap:28px">
-        <blockquote style="margin:0;font:300 clamp(40px,5.6vw,88px)/1.02 'Newsreader',serif;letter-spacing:-.025em;text-wrap:balance">“Parece mentira que un hotel tan pequeño <span style="font-style:italic;color:#B0388F">sea tan grande.</span>”</blockquote>
-        <figcaption style="font:400 14px/1.5 'Hanken Grotesk',sans-serif;color:#525A64">Eva, citando a Gloria Fuertes</figcaption>
+        <blockquote style="margin:0;font:var(--sw) clamp(40px,5vw,80px)/1.04 var(--serif);letter-spacing:var(--track);text-wrap:balance">“Parece mentira que un hotel tan pequeño <span style="font-style:italic;color:#B0388F">sea tan grande.</span>”</blockquote>
+        <figcaption style="font:400 14px/1.5 var(--sans);color:#525A64">Eva, citando a Gloria Fuertes</figcaption>
       </figure>
     </div>
     <div style="display:flex;flex-wrap:wrap;gap:48px clamp(40px,6vw,96px);padding-left:clamp(0px,calc(22vw - 60px),264px)">
       <figure style="flex:1 1 300px;margin:0;display:flex;flex-direction:column;gap:18px;padding-top:28px;border-top:1px solid #DDD7E5">
-        <blockquote style="margin:0;font:300 italic 24px/1.4 'Newsreader',serif;text-wrap:pretty">“Ponerle nombre a cada habitación es un detalle que ya te contagia de su magia. La nuestra era la 7, Imaginación.”</blockquote>
-        <figcaption style="font:400 13px/1.5 'Hanken Grotesk',sans-serif;color:#525A64">Mari Carmen</figcaption>
+        <blockquote style="margin:0;font:var(--sw) italic 24px/1.4 var(--serif);text-wrap:pretty">“Ponerle nombre a cada habitación es un detalle que ya te contagia de su magia. La nuestra era la 7, Imaginación.”</blockquote>
+        <figcaption style="font:400 13px/1.5 var(--sans);color:#525A64">Mari Carmen</figcaption>
       </figure>
       <figure style="flex:1 1 300px;margin:0;display:flex;flex-direction:column;gap:18px;padding-top:28px;border-top:1px solid #DDD7E5">
-        <blockquote style="margin:0;font:300 italic 24px/1.4 'Newsreader',serif;text-wrap:pretty">“Si Priego es una joya, sin duda Casa Baños de la Villa es uno de sus engarces.”</blockquote>
-        <figcaption style="font:400 13px/1.5 'Hanken Grotesk',sans-serif;color:#525A64">Abelardo</figcaption>
+        <blockquote style="margin:0;font:var(--sw) italic 24px/1.4 var(--serif);text-wrap:pretty">“Si Priego es una joya, sin duda Casa Baños de la Villa es uno de sus engarces.”</blockquote>
+        <figcaption style="font:400 13px/1.5 var(--sans);color:#525A64">Abelardo</figcaption>
       </figure>
     </div>
   </div>
 </section>
 
 <section data-screen-label="09 Final" style="position:relative;height:100svh;min-height:600px;background:#1D2329;color:#FAF9F7;overflow:hidden">
-  <div style="position:absolute;inset:0"><image-slot id="final" shape="rect" placeholder="Patio-09.jpg o Terraza-07.jpg — luz de tarde"></image-slot></div>
+  <div style="position:absolute;inset:0"><img src="./assets/photos/final.jpg" alt="" loading="lazy" style="display:block;width:100%;height:100%;object-fit:cover"></img></div>
   <div style="position:absolute;inset:0;pointer-events:none;background:rgba(16,24,34,.38)"></div>
   <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:40px;padding:0 24px;text-align:center;pointer-events:none">
-    <h2 style="margin:0;max-width:12ch;font:300 clamp(52px,8.4vw,140px)/.94 'Newsreader',serif;letter-spacing:-.03em;text-wrap:balance">Ven a vivir tu <span style="font-style:italic">propia historia.</span></h2>
+    <h2 style="margin:0;max-width:12ch;font:var(--sw) clamp(52px,8.4vw,140px)/.94 var(--serif);letter-spacing:var(--track);text-wrap:balance">Ven a vivir tu <span style="font-style:italic">propia historia.</span></h2>
     <div style="display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:28px;pointer-events:auto">
-      <a href="https://www.booking.com/hotel/es/casa-banos-de-la-villa.es.html" target="_blank" rel="noopener" style="display:inline-flex;padding:18px 36px;background:#0A78A8;color:#FAF9F7;font:600 12px/1 'Hanken Grotesk',sans-serif;letter-spacing:.18em;text-transform:uppercase" style-hover="background:#075E86;color:#FAF9F7">Reservar</a>
-      <a href="/la-casa" style="display:inline-flex;gap:14px;white-space:nowrap;padding-bottom:8px;border-bottom:1px solid #FAF9F7;color:#FAF9F7;font:600 12px/1 'Hanken Grotesk',sans-serif;letter-spacing:.18em;text-transform:uppercase" style-hover="color:#DDD7E5">Descubrir la casa <span>→</span></a>
+      <a href="https://www.booking.com/hotel/es/casa-banos-de-la-villa.es.html" target="_blank" rel="noopener" style="display:inline-flex;padding:18px 36px;background:#0A78A8;color:#FAF9F7;font:600 12px/1 var(--sans);letter-spacing:.18em;text-transform:uppercase" style-hover="background:#075E86;color:#FAF9F7">Reservar</a>
+      <a href="/la-casa" style="display:inline-flex;gap:14px;white-space:nowrap;padding-bottom:8px;border-bottom:1px solid #FAF9F7;color:#FAF9F7;font:600 12px/1 var(--sans);letter-spacing:.18em;text-transform:uppercase" style-hover="color:#DDD7E5">Descubrir la casa <span>→</span></a>
     </div>
   </div>
 </section>
@@ -411,26 +421,26 @@ a:hover{color:#0A78A8}
     <div style="display:flex;flex-wrap:wrap;gap:48px 64px;justify-content:space-between">
       <div style="flex:1 1 280px;display:flex;flex-direction:column;gap:20px;color:#FAF9F7">
         <img src="./assets/logo-white.png" alt="Casa Baños de la Villa" style="display:block;width:180px;height:auto"></img>
-        <span style="font:400 14px/1.6 'Hanken Grotesk',sans-serif;color:#DDD7E5">Alojamiento y baños árabes<br>Priego de Córdoba · Andalucía</span>
+        <span style="font:400 14px/1.6 var(--sans);color:#DDD7E5">Alojamiento y baños árabes<br>Priego de Córdoba · Andalucía</span>
       </div>
-      <div style="flex:0 1 220px;display:flex;flex-direction:column;gap:10px;font:400 14px/1.6 'Hanken Grotesk',sans-serif">
-        <span style="font:500 11px/1.2 'Hanken Grotesk',sans-serif;letter-spacing:.24em;text-transform:uppercase;color:#9AA3AE;margin-bottom:8px">Visítanos</span>
+      <div style="flex:0 1 220px;display:flex;flex-direction:column;gap:10px;font:400 14px/1.6 var(--sans)">
+        <span style="font:500 11px/1.2 var(--sans);letter-spacing:.24em;text-transform:uppercase;color:#9AA3AE;margin-bottom:8px">Visítanos</span>
         <span>C/ Real, 63</span><span>14800 Priego de Córdoba</span>
       </div>
-      <div style="flex:0 1 240px;display:flex;flex-direction:column;gap:10px;font:400 14px/1.6 'Hanken Grotesk',sans-serif">
-        <span style="font:500 11px/1.2 'Hanken Grotesk',sans-serif;letter-spacing:.24em;text-transform:uppercase;color:#9AA3AE;margin-bottom:8px">Contacto</span>
+      <div style="flex:0 1 240px;display:flex;flex-direction:column;gap:10px;font:400 14px/1.6 var(--sans)">
+        <span style="font:500 11px/1.2 var(--sans);letter-spacing:.24em;text-transform:uppercase;color:#9AA3AE;margin-bottom:8px">Contacto</span>
         <a href="tel:+34957547274" style="color:#DDD7E5" style-hover="color:#FAF9F7">(+34) 957 54 72 74</a>
         <a href="https://wa.me/34616261461" style="color:#DDD7E5" style-hover="color:#FAF9F7">WhatsApp (+34) 616 261 461</a>
         <a href="mailto:tuhistoria@casabanosdelavilla.com" style="color:#DDD7E5" style-hover="color:#FAF9F7">tuhistoria@casabanosdelavilla.com</a>
       </div>
-      <div style="flex:0 1 180px;display:flex;flex-direction:column;gap:10px;font:400 14px/1.6 'Hanken Grotesk',sans-serif">
-        <span style="font:500 11px/1.2 'Hanken Grotesk',sans-serif;letter-spacing:.24em;text-transform:uppercase;color:#9AA3AE;margin-bottom:8px">Síguenos</span>
+      <div style="flex:0 1 180px;display:flex;flex-direction:column;gap:10px;font:400 14px/1.6 var(--sans)">
+        <span style="font:500 11px/1.2 var(--sans);letter-spacing:.24em;text-transform:uppercase;color:#9AA3AE;margin-bottom:8px">Síguenos</span>
         <a href="https://www.instagram.com/banosdelavilla" style="color:#DDD7E5" style-hover="color:#FAF9F7">Instagram</a>
         <a href="https://www.facebook.com/casabanosdelavilla" style="color:#DDD7E5" style-hover="color:#FAF9F7">Facebook</a>
         <a href="https://twitter.com/BanosdelaVilla" style="color:#DDD7E5" style-hover="color:#FAF9F7">X</a>
       </div>
     </div>
-    <div style="display:flex;flex-wrap:wrap;gap:16px 32px;justify-content:space-between;padding-top:28px;border-top:1px solid rgba(221,215,229,.18);font:400 12px/1.5 'Hanken Grotesk',sans-serif;color:#9AA3AE">
+    <div style="display:flex;flex-wrap:wrap;gap:16px 32px;justify-content:space-between;padding-top:28px;border-top:1px solid rgba(221,215,229,.18);font:400 12px/1.5 var(--sans);color:#9AA3AE">
       <div style="display:flex;flex-wrap:wrap;gap:12px 28px">
         <a href="/la-casa" style="color:#9AA3AE" style-hover="color:#FAF9F7">La casa</a>
         <a href="/habitaciones" style="color:#9AA3AE" style-hover="color:#FAF9F7">Habitaciones</a>
@@ -445,39 +455,152 @@ a:hover{color:#0A78A8}
 
 <sc-if value="{{ showBookBar }}" hint-placeholder-val="{{ false }}">
   <div style="position:fixed;left:0;right:0;bottom:0;z-index:40;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 16px calc(12px + env(safe-area-inset-bottom));background:#FAF9F7;border-top:1px solid #DDD7E5">
-    <span style="font:300 italic 18px/1.1 'Newsreader',serif;color:#1D2329">Vive tu propia historia</span>
-    <a href="https://www.booking.com/hotel/es/casa-banos-de-la-villa.es.html" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;min-height:48px;padding:0 24px;background:#0A78A8;color:#FAF9F7;font:600 11px/1 'Hanken Grotesk',sans-serif;letter-spacing:.18em;text-transform:uppercase">Reservar</a>
+    <span style="font:var(--sw) italic 18px/1.1 var(--serif);color:#1D2329">Vive tu propia historia</span>
+    <a href="https://www.booking.com/hotel/es/casa-banos-de-la-villa.es.html" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;min-height:48px;padding:0 24px;background:#0A78A8;color:#FAF9F7;font:600 11px/1 var(--sans);letter-spacing:.18em;text-transform:uppercase">Reservar</a>
   </div>
 </sc-if>
 
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;heroLayout&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;full&quot;,&quot;split&quot;],&quot;default&quot;:&quot;full&quot;,&quot;tsType&quot;:&quot;'full'|'split'&quot;,&quot;section&quot;:&quot;Hero&quot;},&quot;stickyMobileBook&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Mobile&quot;}}">
+const FONTS = {
+  'Cormorant + Mulish': { serif: "'Cormorant Garamond',Georgia,serif", sans: "'Mulish',system-ui,sans-serif", sw: 400, track: '-.005em' },
+  'Lora + Nunito Sans': { serif: "'Lora',Georgia,serif", sans: "'Nunito Sans',system-ui,sans-serif", sw: 400, track: '-.015em' },
+  'Sorts Mill Goudy + Figtree': { serif: "'Sorts Mill Goudy',Georgia,serif", sans: "'Figtree',system-ui,sans-serif", sw: 400, track: '-.01em' },
+  'Newsreader + Hanken (actual)': { serif: "'Newsreader',Georgia,serif", sans: "'Hanken Grotesk',system-ui,sans-serif", sw: 300, track: '-.025em' },
+};
+const EN = {
+  'La casa':'The house','Habitaciones':'Rooms','Baños & bienestar':'Baths & wellbeing','Experiencias':'Experiences','Reservar':'Book',
+  'Priego de Córdoba · Andalucía':'Priego de Córdoba · Andalusia','Vive tu':'Live your','propia':'own','historia.':'story.',
+  'Descubrir la casa':'Discover the house',
+  'Alojamiento y baños árabes en el Barrio de la Villa, casco histórico de Priego.':"Boutique stay and Arab baths in the Barrio de la Villa, Priego's historic quarter.",
+  '01 — La experiencia':'01 — The experience',
+  'Buscamos ese instante que permanece imborrable en la memoria. Por eso unimos':'We look for the moment that stays in the memory forever. That is why we bring together',
+  'la luz, el agua, los colores, los aromas y los sonidos':'light, water, colour, scent and sound','para crear un lugar con alma.':'to create a place with soul.',
+  'El color.':'Colour.','Cada habitación es única en decoración, en color e, incluso, en aroma.':'Every room is unique in its décor, its colour, even its scent.',
+  'El aroma.':'Scent.','La llave invisible que devuelve un momento vivido a la memoria.':'The invisible key that brings a moment back to mind.',
+  'El agua.':'Water.','Fría, templada y caliente. Cuidado para el cuerpo y para el alma.':'Cold, warm and hot. Care for body and soul.',
+  'Las sensaciones.':'Sensations.',
+  '02 — La casa':'02 — The house','Una casa con alma en el':'A house with soul in the',
+  'Entre muros llenos de historia y tradición, un lugar donde el pasado y el futuro se unen. Un alma que se manifiesta en las personas, en el trato, en el uso de energías renovables y en la responsabilidad social.':'Within walls full of history and tradition, a place where past and future meet. A soul you can feel in its people, in the way guests are looked after, in its use of renewable energy and in its social responsibility.',
+  'Atención sensacional':'Sensational care','Una experiencia única y personal para cada viajero, según sus gustos y aficiones.':'A unique, personal experience for every traveller, shaped around their tastes and interests.',
+  'Patios · Terraza · Piscina en la azotea':'Patios · Terrace · Rooftop pool',
+  '03 — Habitaciones':'03 — Rooms','Nueve habitaciones.':'Nine rooms.','Nueve historias.':'Nine stories.',
+  'Cada habitación es única y diferente en decoración, color e, incluso, en aroma. Todas con baño completo, climatización, internet e hilo musical.':'Each room is unique in décor, colour and even scent. All with private bathroom, air conditioning, internet and ambient music.',
+  'Historias de':'Stories of','Solidaridad':'Solidarity','Vitalidad':'Vitality','Pasión':'Passion','Sueños':'Dreams','Legado':'Legacy','Imaginación':'Imagination','Sostenibilidad':'Sustainability','Armonía':'Harmony',
+  '“La gota abre la piedra, no por su fuerza, sino por su constancia.”':'“A drop hollows the stone, not through strength, but through persistence.”',
+  '“Porque, a veces, también hay que vivir la vida despacio.”':'“Because sometimes life is meant to be lived slowly.”',
+  '“¿Cuál quieres que sea la llave que guarde tu felicidad?”':'“Which key would you like to keep your happiness?”',
+  'Descubrir las habitaciones':'Discover the rooms',
+  '04 — Baños árabes':'04 — Arab baths','Si el cuerpo tiene sed, quiere agua.':'When the body is thirsty, it wants water.','Si el alma tiene sed, quiere Casa Baños de la Villa.':'When the soul is thirsty, it wants Casa Baños de la Villa.',
+  'Un viaje del cuerpo y del alma que sigue la antigua filosofía de los hammam: aguas de distintas temperaturas, aromas y masajes, en una atmósfera creada para ti.':'A journey for body and soul that follows the ancient philosophy of the hammam: waters at different temperatures, scents and massage, in an atmosphere created for you.',
+  'El recorrido':'The circuit','Agua fría':'Cold water','Agua templada':'Warm water','Agua caliente':'Hot water',
+  'Baño turco':'Steam bath','El vapor que prepara el cuerpo para el descanso.':'Steam that prepares the body for rest.',
+  'Masajes &':'Massage &','aromaterapia':'aromatherapy','De 15 o 30 minutos, dentro del propio circuito.':'15 or 30 minutes, within the circuit itself.',
+  'Tetería':'Tea room','El aroma y el sabor del té, para terminar despacio.':'The scent and taste of tea, to finish slowly.',
+  'Sesiones de felicidad':'Sessions of happiness','de circuito':'circuit','Mañanas':'Mornings','Tardes':'Evenings','Todo el año':'All year round','Reserva previa · desde 14 años':'Booking required · ages 14+',
+  'Descubrir los baños':'Discover the baths',
+  'El corazón':'The heart','de Andalucía.':'of Andalusia.',
+  'En pleno Parque Natural de las Sierras Subbéticas. En el Barrio de la Villa te adentrarás en un laberinto de calles estrechas, acompañado por el aroma de las flores y el sonido del agua, que te guiará hasta la casa.':"In the heart of the Sierras Subbéticas Natural Park. In the Barrio de la Villa you'll wander a maze of narrow streets, with the scent of flowers and the sound of water guiding you to the house.",
+  'Sevilla':'Seville','Descubrir Priego':'Discover Priego',
+  '06 — Experiencias regalo':'06 — Gift experiences','Regala un momento':'Give a moment','para recordar.':'to remember.',
+  'Una estancia en la casa o una sesión de felicidad en los baños, para alguien especial.':'A stay at the house or a session of happiness in the baths, for someone special.',
+  'Regalar una experiencia':'Give an experience',
+  '07 — Libro de visitas':'07 — Guestbook','“Parece mentira que un hotel tan pequeño':'“Hard to believe that a hotel so small','sea tan grande.':'could be so big.',
+  'Eva, citando a Gloria Fuertes':'Eva, quoting Gloria Fuertes',
+  '“Ponerle nombre a cada habitación es un detalle que ya te contagia de su magia. La nuestra era la 7, Imaginación.”':'“Giving each room a name is a detail that already draws you into its magic. Ours was number 7, Imagination.”',
+  '“Si Priego es una joya, sin duda Casa Baños de la Villa es uno de sus engarces.”':'“If Priego is a jewel, Casa Baños de la Villa is surely one of its settings.”',
+  'Ven a vivir tu':'Come and live your','propia historia.':'own story.',
+  'Alojamiento y baños árabes':'Boutique stay & Arab baths','Visítanos':'Visit us','Contacto':'Contact','Síguenos':'Follow us','Tarifas':'Rates','Aviso legal':'Legal notice','Privacidad':'Privacy',
+  'Vive tu propia historia':'Live your own story',
+};
+const TITLE = { es: 'Casa Baños de la Villa · Alojamiento y baños árabes en Priego de Córdoba', en: 'Casa Baños de la Villa · Boutique stay & Arab baths in Priego de Córdoba, Andalusia' };
+const BOOK = { es: 'https://www.booking.com/hotel/es/casa-banos-de-la-villa.es.html', en: 'https://www.booking.com/hotel/es/casa-banos-de-la-villa.en-gb.html' };
+
 class Component extends DCLogic {
-  state = { w: typeof window !== 'undefined' ? window.innerWidth : 1440, y: 0, menu: false };
+  state = { w: typeof window !== 'undefined' ? window.innerWidth : 1440, y: 0, menu: false, lang: Component.detectLang() };
+  static detectLang() {
+    try { const s = localStorage.getItem('cbv-lang'); if (s === 'es' || s === 'en') return s; } catch (e) {}
+    const langs = (navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || 'es']);
+    return String(langs[0]).toLowerCase().startsWith('es') ? 'es' : 'en';
+  }
   componentDidMount() {
+    this.orig = new WeakMap();
     this.onR = () => this.setState({ w: window.innerWidth });
     this.onS = () => this.setState({ y: window.scrollY });
     window.addEventListener('resize', this.onR);
     window.addEventListener('scroll', this.onS, { passive: true });
     this.onR(); this.onS();
+    this.onClick = (e) => {
+      const a = e.target.closest && e.target.closest('a[href]');
+      if (a && a.getAttribute('href').startsWith('/')) e.preventDefault();
+    };
+    document.addEventListener('click', this.onClick);
+    this.mo = new MutationObserver(() => this.schedule());
+    this.mo.observe(document.documentElement, { childList: true, subtree: true });
+    this.apply();
   }
+  componentDidUpdate(pp, ps) { if (ps.lang !== this.state.lang || pp.typeface !== this.props.typeface) this.apply(); }
   componentWillUnmount() {
     window.removeEventListener('resize', this.onR);
     window.removeEventListener('scroll', this.onS);
+    this.mo && this.mo.disconnect();
+    document.removeEventListener('click', this.onClick);
   }
+  schedule() { if (this.raf) return; this.raf = requestAnimationFrame(() => { this.raf = 0; this.translate(); }); }
+  applyFont() {
+    if (typeof document === 'undefined') return;
+    const key = 'Cormorant + Mulish';
+    if (this.fontKey === key) return;
+    this.fontKey = key;
+    const f = FONTS[key] || FONTS['Cormorant + Mulish'];
+    const r = document.documentElement.style;
+    r.setProperty('--serif', f.serif); r.setProperty('--sans', f.sans); r.setProperty('--sw', String(f.sw)); r.setProperty('--track', f.track);
+  }
+  apply() {
+    this.fontKey = null; this.applyFont();
+    document.documentElement.lang = this.state.lang;
+    document.title = TITLE[this.state.lang];
+    this.translate();
+  }
+  translate() {
+    if (!this.orig) return;
+    const en = this.state.lang === 'en';
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    let n;
+    while ((n = walker.nextNode())) {
+      const p = n.parentNode; if (!p || p.nodeName === 'SCRIPT' || p.nodeName === 'STYLE') continue;
+      let o = this.orig.get(n);
+      if (o === undefined) { o = n.nodeValue; const k = o.trim(); if (!EN[k]) continue; this.orig.set(n, o); }
+      const k = o.trim();
+      const want = en ? o.replace(k, EN[k]) : o;
+      if (n.nodeValue !== want) n.nodeValue = want;
+    }
+    if (document.title !== TITLE[this.state.lang]) document.title = TITLE[this.state.lang];
+    document.querySelectorAll('a[href*="booking.com"]').forEach(a => { const v = BOOK[this.state.lang]; if (a.getAttribute('href') !== v) a.setAttribute('href', v); });
+  }
+  setLang(l) { try { localStorage.setItem('cbv-lang', l); } catch (e) {} this.setState({ lang: l }); }
   renderVals() {
     const mobile = this.state.w < 1080;
     const heroFull = (this.props.heroLayout ?? 'full') === 'full';
     const solid = this.state.y > 60 || this.state.menu;
     const darkMenu = this.state.menu;
     const onHero = heroFull && !solid;
+    const en = this.state.lang === 'en';
+    this.applyFont();
     return {
       mobile, desktop: !mobile, wide: this.state.w >= 1180,
+      expRowWrap: this.state.w >= 700 ? 'nowrap' : 'wrap',
+      casaWrap: this.state.w >= 1180 ? 'nowrap' : 'normal',
       heroFull, heroSplit: !heroFull,
       menuOpen: this.state.menu && mobile,
-      menuLabel: this.state.menu ? 'Cerrar' : 'Menú',
+      menuLabel: this.state.menu ? (en ? 'Close menu' : 'Cerrar menú') : (en ? 'Open menu' : 'Abrir menú'),
+      bar1Top: this.state.menu ? '21px' : '14px', bar1Rot: this.state.menu ? 'rotate(45deg)' : 'none',
+      bar3Top: this.state.menu ? '21px' : '28px', bar3Rot: this.state.menu ? 'rotate(-45deg)' : 'none',
+      bar2Op: this.state.menu ? 0 : 1,
       toggleMenu: () => this.setState(s => ({ menu: !s.menu })),
       closeMenu: () => this.setState({ menu: false }),
+      setEs: () => this.setLang('es'), setEn: () => this.setLang('en'),
+      esOp: en ? 0.5 : 1, enOp: en ? 1 : 0.5,
       navBg: darkMenu ? '#0A5A80' : (solid ? 'rgba(250,249,247,.96)' : 'transparent'),
       logoWhite: darkMenu || onHero,
       logoColor: !(darkMenu || onHero),
